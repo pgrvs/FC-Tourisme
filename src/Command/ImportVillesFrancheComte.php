@@ -29,7 +29,7 @@ class ImportVillesFrancheComte extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $reader = Reader::createFromPath('src\Command\villes.csv', 'r');
+        $reader = Reader::createFromPath('src/Command/villes.csv', 'r');
         $reader->setDelimiter(';');
         $reader->setHeaderOffset(0);
         $records = $reader->getRecords();
