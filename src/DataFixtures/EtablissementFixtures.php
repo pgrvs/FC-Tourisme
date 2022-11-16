@@ -41,7 +41,7 @@ class EtablissementFixtures extends Fixture
                             ->setDescription($faker->paragraph())
                             ->setNumTelephone($faker->phoneNumber())
                             ->setAdresse($faker->streetAddress())
-                            ->setEmail(str_replace(' ', '',strtolower($etablissement->getNom())).$faker->freeEmailDomain())
+                            ->setEmail(str_replace(' ', '',strtolower($etablissement->getNom())).'@'.$faker->freeEmailDomain())
                             ->setActif($faker->boolean())
                             ->setAccueil($faker->boolean())
                             ->setCreatedAt($faker->dateTime())
