@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EtablissementController!{% endblock %}
+
+{% block body %}
+<h1 class="text-center mb-4">Etablissements</h1>
+    <div class="row justify-content-between custom-line">
+    {% for etablissement in etablissements %}
+        <div class="card mx-auto mt-2" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ etablissement.nom }}</h5>
+                <p class="card-text">{{ etablissement.description |slice(0, 75) }}...</p>
+                <p class="list-group">
+                    <div class="alert alert-success" role="alert">
+                        <ul class="list-group">
+                            {% for categorie in etablissement.categorie %}
+                                <li class="list-group-item">{{ categorie.nom | capitalize}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </p>
+                <p class="card-text">{{ etablissement.ville.codePostal}}, {{ etablissement.ville.nom | lower | capitalize }}</p>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-center">
+                    <a href="#" class="btn btn-outline-secondary">Voir</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    <div class="navigation m-3 d-flex justify-content-center">
+        {{ knp_pagination_render(etablissements) }}
+    </div>
+
+{% endblock %}
