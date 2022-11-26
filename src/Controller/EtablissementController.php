@@ -37,10 +37,10 @@ class EtablissementController extends AbstractController
     #[Route('/etablissements/{slug}', name: 'app_etablissements_slug')]
     public function getEtablissement($slug, Request $request): Response
     {
-        $etablissements = $this->etablissementRepository->findOneBy(["slug" => $slug, "actif" => true]);
+        $etablissement = $this->etablissementRepository->findOneBy(["slug" => $slug, "actif" => true]);
 
-        return $this->render('etablissement/index.html.twig', [
-            'etablissements' => $etablissements,
+        return $this->render('etablissement/etablissement.html.twig', [
+            'etablissement' => $etablissement,
         ]);
     }
 }

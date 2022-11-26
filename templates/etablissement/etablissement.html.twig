@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Etablissement{% endblock %}
+
+{% block body %}
+    <h1 class="text-center mb-4">Etablissement {{ etablissement.nom }}</h1>
+    <div class="d-flex justify-content-center row">
+        <div class="card m-1 col-10 col-lg-6 col-lg-7">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Description</h6>
+                <p class="card-text">{{ etablissement.description}}</p>
+                <h6 class="card-subtitle mb-2 text-muted">Adresse</h6>
+                <p class="card-text"><i class="bi bi-geo-alt"></i> {{ etablissement.adresse}}, {{ etablissement.ville.nom | capitalize}}</p>
+                <h6 class="card-subtitle mb-2 text-muted">Contact</h6>
+                <p class="card-text"><i class="bi bi-telephone"></i> {{ etablissement.numTelephone }} <br><i class="bi bi-envelope-at"></i> {{ etablissement.email}}</p>
+            </div>
+        </div>
+        <div class="card m-1 col-lg-3 col-10">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Catégorie</h6>
+                <div class="alert alert-success" role="alert">
+                    <ul class="list-group">
+                        {% for categorie in etablissement.categorie %}
+                            <li class="list-group-item">{{ categorie.nom | capitalize}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
