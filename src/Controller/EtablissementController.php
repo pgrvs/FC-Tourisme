@@ -21,6 +21,12 @@ class EtablissementController extends AbstractController
         $this->etablissementRepository = $etablissementRepository;
     }
 
+    #[Route('/', name: 'app_accueil')]
+    public function index(): Response
+    {
+        return $this->render('accueil/index.html.twig' );
+    }
+
     #[Route('/etablissements', name: 'app_etablissements')]
     public function getEtablissements(PaginatorInterface $paginator, Request $request): Response
     {

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    {% if error %}
+        <div class="alert alert-danger mt-3 text-center" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    <h1 class="text-center my-5">Authentification</h1>
+    <div class="d-flex justify-content-center">
+        <div class="card p-4 border-light" style="width: 30rem;">
+            <form action="{{ path('app_login') }}" method="post">
+                <div class="row align-items-center mb-3">
+                    <div class="col-3">
+                        <label class="form-label mb-0" for="username">Email</label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}">
+                    </div>
+                </div>
+                <div class="row align-items-center mb-3">
+                    <div class="col-3">
+                        <label class="form-label mb-0" for="password" class="form-label">Password</label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" type="password" id="password" name="_password">
+                    </div>
+                </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <button type="submit" class="btn btn-primary ">login</button>
+            </form>
+        </div>
+
+    </div>
+
+{% endblock %}
