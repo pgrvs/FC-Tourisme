@@ -31,6 +31,19 @@ class Categorie {
     - createdAt : datetime
 }
 
+class Utilisateur {
+    - id: int
+    - prenom : string
+    - nom : string
+    - pseudo : string
+    - email : string
+    - motDePasse : string
+    - createdAt : datetime
+    - updatedAt : datetime
+    - roles : array
+    - actif : bool
+}
+
 Categorie"1..*"--"0..*"Etablissement
 Ville"1..1"--"0..*"Etablissement
 @enduml
