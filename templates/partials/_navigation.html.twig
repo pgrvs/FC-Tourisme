@@ -9,7 +9,8 @@
                 <a class="nav-link active" aria-current="page" href="{{ path("app_accueil") }}">Accueil</a>
                 <a class="nav-link active" aria-current="page" href="{{ path("app_etablissements") }}">Établissements</a>
                 {%  if  is_granted ( 'IS_AUTHENTICATED_REMEMBERED' )  %}
-                    <a class="nav-link active" aria-current="page" href="#">Déconnexion</a>
+                    <a class="nav-link active" aria-current="page" href="{{ path("app_logout") }}">Déconnexion</a>
+                    <span class="navbar-text">{{ app.user.prenom }}</span>
                 {%  else  %}
                     <a class="nav-link active" aria-current="page" href="{{ path("app_login") }}">Connexion</a>
                 {%  endif  %}
