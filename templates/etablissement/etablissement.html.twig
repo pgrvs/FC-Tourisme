@@ -3,7 +3,22 @@
 {% block title %}Etablissement{% endblock %}
 
 {% block body %}
-    <h1 class="text-center mb-4">Etablissement {{ etablissement.nom }}</h1>
+    <div class="card-footer mb-3 d-flex justify-content-around">
+        <h1 class="text-center my-auto">Etablissement {{ etablissement.nom }}</h1>
+        {% if is_granted( 'IS_AUTHENTICATED_REMEMBERED' ) %}
+            {% for favoris in etablissement.favoris %}
+                {% if favoris.id == app.user.id %}
+                    <a href="#" class="my-auto"><i class="bi bi-star-fill text-success fs-5"></i></a>
+                {% else %}
+                    <a href="#" class="my-auto"><i class="bi bi-star text-success fs-5"></i></a>
+                {% endif %}
+            {% else %}
+                <a href="#" class="my-auto"><i class="bi bi-star text-success fs-5"></i></a>
+            {% endfor %}
+        {% else %}
+            <a href="#" class="my-auto"><i class="bi bi-star text-success fs-5"></i></a>
+        {% endif %}
+    </div>
     <div class="d-flex justify-content-center row">
         <div class="card m-1 col-10 col-lg-6 col-lg-7">
             <div class="card-body">

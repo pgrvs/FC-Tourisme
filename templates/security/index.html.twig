@@ -8,7 +8,7 @@
     {% endif %}
     <h1 class="text-center my-5">Authentification</h1>
     <div class="d-flex justify-content-center">
-        <div class="card p-4 border-light" style="width: 30rem;">
+        <div class="card p-4 border-success" style="width: 30rem;">
             <form action="{{ path('app_login') }}" method="post">
                 <div class="row align-items-center mb-3">
                     <div class="col-3">
@@ -26,10 +26,11 @@
                         <input class="form-control" type="password" id="password" name="_password">
                     </div>
                 </div>
-
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success">login</button>
+                </div>
 
-                <button type="submit" class="btn btn-primary ">login</button>
             </form>
         </div>
 
