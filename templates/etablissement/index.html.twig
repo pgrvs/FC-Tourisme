@@ -28,10 +28,10 @@
                         {% if favoris.id == app.user.id %}
                             <a href="#" class="my-auto"><i class="bi bi-star-fill text-success fs-5"></i></a>
                         {% else %}
-                            <a href="#" class="my-auto"><i class="bi bi-star text-success fs-5"></i></a>
+                            <a href="{{ path('app_add_favori_slug', {'slug': etablissement.slug}) }}" class="my-auto"><i class="bi bi-star text-success fs-5"></i></a>
                         {% endif %}
                     {% else %}
-                        <a href="#" class="my-auto"><i class="bi bi-star text-success fs-5"></i></a>
+                        <a href="{{ path('app_add_favori_slug', {'slug': etablissement.slug}) }}" class="my-auto"><i class="bi bi-star text-success fs-5"></i></a>
                     {% endfor %}
                 {% else %}
                     <a href="#" class="my-auto"><i class="bi bi-star text-success fs-5"></i></a>

@@ -45,12 +45,4 @@ class EtablissementController extends AbstractController
             'etablissement' => $etablissement,
         ]);
     }
-
-    #[Route('/favoris/ajout/{id}', name: 'favoris_ajout')]
-    public function ajoutFavoris(Etablissement $etablissement): Response
-    {
-        if (!$etablissement){
-            throw new NotFoundHttpException("Pas d'établissement trouvéé.");
-        }
-    }
 }

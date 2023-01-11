@@ -46,5 +46,5 @@ class Utilisateur {
 
 Categorie"1..*"--"0..*"Etablissement
 Ville"1..1"--"0..*"Etablissement
-Etablissement"0..*"--"0..*"Utilisateur : Favori
+Etablissement"0..*"-"0..*"Utilisateur : Favori
 @enduml
