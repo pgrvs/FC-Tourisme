@@ -4,4 +4,8 @@
 
 {% block body %}
     <h1 class="text-center mb-4">Accueil</h1>
+    {{ include('./partials/listeEtablissements.html.twig') }}
+    <div class="navigation m-3 d-flex justify-content-center">
+        {{ knp_pagination_render(etablissements) }}
+    </div>
 {% endblock %}

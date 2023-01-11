@@ -14,7 +14,9 @@
                 </li>
                 {%  if  is_granted ( 'IS_AUTHENTICATED_REMEMBERED' )  %}
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ path("app_favoris") }}">{{  app.user.favoris|length < 2 ? 'Favori' : 'Favoris' }}</a>
+                        <a class="nav-link active" aria-current="page" href="{{ path("app_favoris") }}">
+                            {{  app.user.favoris|length < 2 ? 'Favori' : 'Favoris' }}<span class="badge text-bg-success ms-1">{{ app.user.favoris|length }}</span>
+                        </a>
                     </li>
                 {% endif %}
             </ul>
