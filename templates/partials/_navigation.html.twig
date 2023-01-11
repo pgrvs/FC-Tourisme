@@ -12,6 +12,11 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{ path("app_etablissements") }}">Établissements</a>
                 </li>
+                {%  if  is_granted ( 'IS_AUTHENTICATED_REMEMBERED' )  %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ path("app_favoris") }}">Favoris</a>
+                    </li>
+                {% endif %}
             </ul>
             <div class="navbar-nav">
                 {%  if  is_granted ( 'IS_AUTHENTICATED_REMEMBERED' )  %}
