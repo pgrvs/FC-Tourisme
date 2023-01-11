@@ -47,7 +47,7 @@ class FavoriController extends AbstractController
         $user->addFavori($etablissemnt);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
-        return $this->redirectToRoute('app_etablissements');
+        return $this->redirect($_SERVER['HTTP_REFERER']);
     }
 
     #[Route('/favoris/supprime/{slug}', name: 'app_delete_favori_slug')]
@@ -58,6 +58,6 @@ class FavoriController extends AbstractController
         $user->removeFavori($etablissemnt);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
-        return $this->redirectToRoute('app_etablissements');
+        return $this->redirect($_SERVER['HTTP_REFERER']);
     }
 }

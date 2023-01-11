@@ -14,18 +14,24 @@
                 </li>
                 {%  if  is_granted ( 'IS_AUTHENTICATED_REMEMBERED' )  %}
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ path("app_favoris") }}">Favoris</a>
+                        <a class="nav-link active" aria-current="page" href="{{ path("app_favoris") }}">{{  app.user.favoris|length < 2 ? 'Favori' : 'Favoris' }}</a>
                     </li>
                 {% endif %}
             </ul>
-            <div class="navbar-nav">
+            <ul class="navbar-nav">
                 {%  if  is_granted ( 'IS_AUTHENTICATED_REMEMBERED' )  %}
-                    <span class="navbar-text me-2">{{ app.user.prenom }}</span>
-                    <a class="btn btn-outline-success me-2" aria-current="page" href="{{ path("app_logout") }}">Déconnexion</a>
+                    <li class="nav-item my-auto">
+                        <span class="navbar-text me-2">{{ app.user.prenom }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-danger me-2" aria-current="page" href="{{ path("app_logout") }}">Déconnexion</a>
+                    </li>
                 {%  else  %}
-                    <a class="btn btn-outline-success" aria-current="page" href="{{ path("app_login") }}">Connexion</a>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-success" aria-current="page" href="{{ path("app_login") }}">Connexion</a>
+                    </li>
                 {%  endif  %}
-            </div>
+            </ul>
         </div>
     </div>
 </nav>
