@@ -6,11 +6,12 @@ use App\Entity\Etablissement;
 use App\Repository\CategorieRepository;
 use App\Repository\VilleRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class EtablissementFixtures extends Fixture
+class EtablissementFixtures extends Fixture implements DependentFixtureInterface
 {
     private SluggerInterface $slugger;
     private VilleRepository $villeRepository;
