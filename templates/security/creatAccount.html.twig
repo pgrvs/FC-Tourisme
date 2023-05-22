@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <h1 class="text-center my-5">Créer votre compte</h1>
+    <div class="d-flex justify-content-center">
+        <div class="card p-4 border-primary mb-5" style="width: 50vw; min-width: 300px">
+            {{ form_start(formUser) }}
+            {# ------champs Prenom------- #}
+            {{ form_row(formUser.prenom, {
+                'label' : 'Prénom',
+                'label_attr' : {
+                    'class' : 'text-primary'
+                },
+                'attr' : {
+                    'placeholder' : 'Veuillez saisir votre prénom'
+                },
+                'help' : "Le prénom doit contenir au moins 2 caractères et maximun 60 caractères."
+            }) }}
+
+            {# -------champs nom------- #}
+            {{ form_row(formUser.nom, {
+                'label' : 'Nom',
+                'label_attr' : {
+                    'class' : 'text-primary'
+                },
+                'attr' : {
+                    'placeholder' : 'Veuillez saisir votre nom'
+                },
+                'help' : "Le nom doit contenir au moins 2 caractères et maximun 60 caractères."
+            }) }}
+
+            {# -------champs email------- #}
+            {{ form_row(formUser.email, {
+                'label' : 'Email',
+                'label_attr' : {
+                    'class' : 'text-primary'
+                },
+                'attr' : {
+                    'placeholder' : 'Veuillez saisir votre email'
+                }
+            }) }}
+
+            {# -------champs pseudo------- #}
+            {{ form_row(formUser.pseudo, {
+                'label' : 'Pseudo (non obligatoire)',
+                'label_attr' : {
+                    'class' : ''
+                },
+                'attr' : {
+                    'placeholder' : 'Veuillez saisir votre pseudo'
+                },
+                'help' : "Le pseudo ne doit avoir au maximun 60 caractères."
+            }) }}
+
+            {# -------champs password------- #}
+            {{ form_row(formUser.password, {
+                'label' : 'Mot de passe',
+                'label_attr' : {
+                    'class' : 'text-primary'
+                },
+                'attr' : {
+                    'placeholder' : 'Veuillez saisir votre mot de passe'
+                },
+                'help' : "Le mot de passe doit contenir au moins 8 caractères."
+            }) }}
+
+            {# -------champs roles------- #}
+            {{ form_row(formUser.roles, {
+                'label' : 'Vous êtes un :',
+                'label_attr' : {
+                    'class' : 'text-primary'
+                },
+                'attr' : {
+                    'placeholder' : 'Veuillez saisir votre '
+                }
+            }) }}
+
+            <input type="submit" class="btn btn-primary mt-2" value="Créer">
+            {{ form_end(formUser) }}
+        </div>
+
+    </div>
+
+{% endblock %}

@@ -29,8 +29,9 @@
                         <a class="btn btn-outline-danger me-2" aria-current="page" href="{{ path("app_logout") }}">Déconnexion</a>
                     </li>
                 {%  else  %}
-                    <li class="nav-item">
+                    <li class="nav-item me-2">
                         <a class="btn btn-outline-success" aria-current="page" href="{{ path("app_login") }}">Connexion</a>
+                        <a class="btn btn-outline-primary" aria-current="page" href="{{ path("app_creat_account") }}">Créer compte</a>
                     </li>
                 {%  endif  %}
             </ul>

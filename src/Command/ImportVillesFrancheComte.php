@@ -8,6 +8,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 use League\Csv\Reader;
 
@@ -26,17 +27,25 @@ class ImportVillesFrancheComte extends Command
         parent::__construct();
     }
 
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $reader = Reader::createFromPath('src/Command/villes.csv', 'r');
         $reader->setDelimiter(';');
         $reader->setHeaderOffset(0);
         $records = $reader->getRecords();
+
+        $progressBar = new ProgressBar($output, count($reader));
+
         foreach ($records as $offset => $record) {
+            $progressBar->advance();
             if ($record['Département'] == 25 || $record['Département'] == 70 || $record['Département'] == 90 || $record['Département'] == 39) {
                 $ville = new Ville();
                 $ville->setCodePostal($record['Code postal']);
+                if (!empty($record['Ancienne commune'])) {
+                    $ville->setNom($record['Commune']. " - " .$record['Ancienne commune']);
+                } else {
+                    $ville->setNom($record['Commune']);
+                }
                 $ville->setNom($record['Commune']);
                 $ville->setNomDepartement($record['Nom département']);
                 $ville->setNumDepartement($record['Département']);
@@ -45,6 +54,7 @@ class ImportVillesFrancheComte extends Command
                 $this->villeRepository->save($ville, true);
             }
         }
+        $progressBar->finish();
         return Command::SUCCESS;
     }
 }

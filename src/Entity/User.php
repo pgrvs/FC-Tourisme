@@ -20,9 +20,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: 'L\'email est obligatoire.')]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Le statut est obligatoire.')]
     private array $roles = [];
 
     /**
@@ -30,14 +32,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\Length(min: 8)]
+    #[Assert\NotBlank(message: 'Le mot de passe est obligatoire.')]
     private ?string $password = null;
 
     #[ORM\Column(length: 150)]
     #[Assert\Length(min: 2, max: 60)]
+    #[Assert\NotBlank(message: 'Le prénom est obligatoire.')]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 200)]
     #[Assert\Length(min: 2, max: 60)]
+    #[Assert\NotBlank(message: 'Le nom est obligatoire.')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 100, nullable: true)]
