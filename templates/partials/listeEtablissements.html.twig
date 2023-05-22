@@ -1,21 +1,23 @@
 <div class="row">
     {% for etablissement in etablissements %}
         <div class="card mt-2 mx-auto p-0" style="width: 18rem;">
+            <div class="card-img-top" style=" background: url('{{ etablissement.image }}'); background-size: cover; height: 10rem;">
+                <div class="d-flex justify-content-center mt-3">
+                    {% for categorie in etablissement.categorie %}
+                        <span class="badge text-bg-success mx-1">{{ categorie.nom | capitalize}}</span>
+                    {% endfor %}
+                </div>
+            </div>
             <div class="card-body">
                 <h5 class="card-title">{{ etablissement.nom }}</h5>
                 <p class="card-text">{{ etablissement.description |slice(0, 75) }}...</p>
-                <div class="alert alert-success d-flex justify-content-center" role="alert">
-                    {% for categorie in etablissement.categorie %}
-                        <span class="badge text-bg-light mx-1">{{ categorie.nom | capitalize}}</span>
-                    {% endfor %}
-                </div>
                 <p class="card-text">
                     <i class="bi bi-geo-alt"></i>
                     {{ etablissement.ville.codePostal}} {{ etablissement.ville.nom | lower | capitalize }}
                 </p>
             </div>
             <div class="card-footer d-flex justify-content-between">
-
+                <a href="{{ path('app_etablissements_slug', {'slug': etablissement.slug}) }}" class="btn btn-outline-success">Voir</a>
                 {% if is_granted( 'IS_AUTHENTICATED_REMEMBERED' ) %}
                     {% set isFavorite = false %}
                     {% for favoris in etablissement.favoris %}
@@ -29,8 +31,6 @@
                         <a href="{{ path('app_add_favori_slug', {'slug': etablissement.slug}) }}" class="my-auto"><i class="bi bi-star text-success fs-5"></i></a>
                     {% endif %}
                 {% endif %}
-
-                <a href="{{ path('app_etablissements_slug', {'slug': etablissement.slug}) }}" class="btn btn-outline-success">Voir</a>
             </div>
         </div>
     {% endfor %}

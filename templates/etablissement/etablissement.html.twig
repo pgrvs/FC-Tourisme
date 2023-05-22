@@ -22,8 +22,8 @@
                 {% endfor %}
             {% endif %}
         </div>
-        <div class="d-flex justify-content-center row">
-            <div class="card m-1 col-10 col-lg-6 col-lg-7">
+        <div class="d-flex justify-content-center row mb-5">
+            <div class="card m-1 col-10 col-lg-4 col-lg-6">
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2 text-muted">Description</h6>
                     <p class="card-text">{{ etablissement.description}}</p>
@@ -33,17 +33,14 @@
                     <p class="card-text"><i class="bi bi-telephone"></i> {{ etablissement.numTelephone }} <br><i class="bi bi-envelope-at"></i> {{ etablissement.email}}</p>
                 </div>
             </div>
-            <div class="card m-1 col-lg-3 col-10">
+            <div class="card m-1 col-lg-5 col-10">
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2 text-muted">Catégorie</h6>
-                    <div class="alert alert-success" role="alert">
-                        <ul class="list-group">
-                            {% for categorie in etablissement.categorie %}
-                                <li class="list-group-item">{{ categorie.nom | capitalize}}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                    {% for categorie in etablissement.categorie %}
+                        <span class="badge text-bg-success mx-1">{{ categorie.nom | capitalize}}</span>
+                    {% endfor %}
                 </div>
+                <img src="{{ etablissement.image }}" alt="image de l'établissement" class="mb-2" style=" border-radius: 10px;">
             </div>
         </div>
     {% endif %}

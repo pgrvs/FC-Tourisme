@@ -46,7 +46,8 @@ class EtablissementFixtures extends Fixture implements DependentFixtureInterface
                             ->setActif($faker->boolean())
                             ->setAccueil($faker->boolean())
                             ->setCreatedAt($faker->dateTime())
-                            ->setUpdatedAt($faker->dateTimeBetween('-6months'));
+                            ->setUpdatedAt($faker->dateTimeBetween('-6months'))
+                            ->setImage($faker->imageUrl(640, 380, 'exemple', false, 'image', true));
 
             $numCat = $faker->randomElements([0, 1, 2, 3, 4], $faker->numberBetween(1,3));
             foreach ($numCat as $num)
