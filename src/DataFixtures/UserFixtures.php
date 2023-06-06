@@ -24,7 +24,7 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create("fr_FR");
-        $userRoles = ['ROLE_USER','ROLE_RESTAURANT', 'ROLE_ADMIN'];
+        $userRoles = ['ROLE_USER','ROLE_PROPRIETAIRE', 'ROLE_ADMIN'];
         for ($i=0; $i<20; $i++) {
             $date = $faker->dateTimeBetween('-6months');
             $utilisateur = new User();

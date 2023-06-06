@@ -22,7 +22,7 @@ class Categorie
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
-    #[ORM\ManyToMany(targetEntity: Etablissement::class, mappedBy: 'categorie')]
+    #[ORM\ManyToMany(targetEntity: Etablissement::class, mappedBy: 'categorie', cascade: ['remove'])]
     private Collection $etablissements;
 
     public function __construct()

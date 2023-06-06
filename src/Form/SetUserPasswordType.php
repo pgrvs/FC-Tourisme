@@ -4,27 +4,22 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class SetUserPasswordType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('prenom', TextType::class)
-            ->add('nom', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('pseudo', TextType::class, [
-                'required' => false
+            ->add('password', PasswordType::class, [
+                'label' => 'Mot de passe actuel',
             ])
-            ->add('password', RepeatedType::class, [
+            ->add('newPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'Les champs de mot de passe doivent être identique.',
+                'invalid_message' => 'Les mots de passe doivent être identique.',
                 'options' => [
                     'help' => "Le mot de passe doit contenir au moins 8 caractères.",
                     'label_attr' => [
@@ -32,14 +27,14 @@ class UserType extends AbstractType
                     ],
                     'attr' => [
                         'class' => 'password-field',
-                        'placeholder' => 'Veuillez saisir votre mot de passe'
+                        'placeholder' => 'Veuillez saisir votre nouveau mot de passe'
                     ]
                 ],
+                'first_options' => ['label' => 'Nouveau mot de passe'],
+                'second_options' => ['label' => 'Confirmation du nouveau mot de passe'],
                 'required' => true,
-                'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Répéter le mot de passe'],
-            ])
-        ;
+                'mapped' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

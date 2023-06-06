@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class SetUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -21,23 +21,6 @@ class UserType extends AbstractType
             ->add('email', EmailType::class)
             ->add('pseudo', TextType::class, [
                 'required' => false
-            ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Les champs de mot de passe doivent être identique.',
-                'options' => [
-                    'help' => "Le mot de passe doit contenir au moins 8 caractères.",
-                    'label_attr' => [
-                        'class' => 'text-primary'
-                    ],
-                    'attr' => [
-                        'class' => 'password-field',
-                        'placeholder' => 'Veuillez saisir votre mot de passe'
-                    ]
-                ],
-                'required' => true,
-                'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Répéter le mot de passe'],
             ])
         ;
     }

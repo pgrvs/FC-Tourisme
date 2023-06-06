@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Etablissements{% endblock %}
+
+{% block body %}
+    <h1 class="text-center mb-4">{{  app.user.posseder|length < 2 ? 'Votre Établissement' : 'Vos Établissements' }}</h1>
+    <div class="row">
+        {% for etablissement in etablissements %}
+            <div class="card mt-2 mx-auto p-0" style="width: 18rem;">
+                <div class="card-img-top" style=" background: url('{{ etablissement.image }}'); background-size: cover; height: 10rem;">
+                    <div class="text-center mt-3">
+                        {% for categorie in etablissement.categorie %}
+                            <span class="badge text-bg-success mx-1">{{ categorie.nom | capitalize}}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ etablissement.nom }}</h5>
+                    <p class="card-text">{{ etablissement.description |slice(0, 75) }}...</p>
+                    <p class="card-text">
+                        <i class="bi bi-geo-alt"></i>
+                        {{ etablissement.ville.codePostal}} {{ etablissement.ville.nom | lower | capitalize }}
+                    </p>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="{{ path('app_etablissements_slug_proprietaire', {'slug': etablissement.slug}) }}" class="btn btn-outline-success">Voir</a>
+                    <a href="{{ path('app_etablissements_modifier', {'slug': etablissement.slug}) }}" class="btn btn-outline-warning">Modifier</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="navigation m-3 d-flex justify-content-center">
+        {{ knp_pagination_render(etablissements) }}
+    </div>
+
+{% endblock %}
+

@@ -19,24 +19,34 @@ class Etablissement
 
     #[ORM\Column(length: 200)]
     #[Assert\Length(min: 5)]
+    #[Assert\NotBlank(message: 'Le nom est obligatoire.')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 200)]
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'La description est obligatoire.')]
     private ?string $description = null;
 
     #[ORM\Column(length: 20)]
+    #[Assert\NotBlank(message: 'Le numéro de téléphone est obligatoire.')]
+    #[Assert\Regex(
+        pattern: '/^(?:\d\s*){10}$/',
+        message: 'Veuillez entrer un numéro de téléphone valide composé uniquement de chiffres.'
+    )]
     private ?string $numTelephone = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'L\'adresse est obligatoire.')]
     private ?string $adresse = null;
 
     #[ORM\Column(length: 200)]
+    #[Assert\NotBlank(message: 'L\'email est obligatoire.')]
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255)]
     private ?string $image = null;
 
     #[ORM\Column]
@@ -55,11 +65,15 @@ class Etablissement
     #[ORM\JoinColumn(nullable: false)]
     private ?Ville $ville = null;
 
-    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'etablissements')]
+    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'etablissements', cascade: ['remove'])]
+    #[ORM\JoinColumn(nullable: false)]
     private Collection $categorie;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'favoris')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'favoris', cascade: ['remove'])]
     private Collection $favoris;
+
+    #[ORM\ManyToOne(inversedBy: 'posseder')]
+    private ?User $proprietaire = null;
 
     public function __construct()
     {
@@ -260,6 +274,18 @@ class Etablissement
     public function removeFavori(User $favori): self
     {
         $this->favoris->removeElement($favori);
+
+        return $this;
+    }
+
+    public function getProprietaire(): ?User
+    {
+        return $this->proprietaire;
+    }
+
+    public function setProprietaire(?User $proprietaire): self
+    {
+        $this->proprietaire = $proprietaire;
 
         return $this;
     }

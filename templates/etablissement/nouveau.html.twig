@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <h1 class="text-center my-5">Ajouter votre établissement</h1>
+    <div class="d-flex justify-content-center">
+        <div class="card p-4 border-primary mb-5" style="width: 50vw; min-width: 300px">
+            {{ form_start(formEtablissement) }}
+            {# ------champs nom------- #}
+            {{ form_row(formEtablissement.nom, {
+                'label' : 'Nom',
+                'label_attr' : {
+                    'class' : 'text-primary'
+                },
+                'attr' : {
+                    'placeholder' : 'Veuillez saisir son nom',
+                },
+                'help' : "Le nom doit contenir au moins 5 caractères."
+            }) }}
+
+            {# -------champs description------- #}
+            {{ form_row(formEtablissement.description, {
+                'label' : 'Description',
+                'label_attr' : {
+                    'class' : 'text-primary'
+                },
+                'attr' : {
+                    'placeholder' : 'Veuillez saisir la description'
+                }
+            }) }}
+
+            {# -------champs catgeories------- #}
+            {{ form_row(formEtablissement.categorie, {
+                'label' : 'Catégories',
+                'label_attr' : {
+                    'class' : 'text-primary text-capitalize',
+                }
+            }) }}
+
+            {# -------champs telephone------- #}
+            {{ form_label(formEtablissement.numTelephone, 'Telephone', {
+                'label_attr': {
+                    'class': 'text-primary'
+                }
+            }) }}
+
+            {{ form_widget(formEtablissement.numTelephone, {
+                'attr': {
+                    'placeholder': 'Veuillez saisir le numéro de téléphone',
+                    'class': 'phone-input mb-3',
+                    'maxlength' : '14'
+                }
+            }) }}
+            {{ form_errors(formEtablissement.numTelephone) }}
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('.phone-input').on('input', function() {
+                        let value = $(this).val();
+                        let formattedValue = value.replace(/\D/g, '').replace(/(\d{2})(?=\d{2})/g, '$1 ');
+                        $(this).val(formattedValue);
+                    });
+                });
+            </script>
+
+            {# -------champs ville------- #}
+            {{ form_row(formEtablissement.ville, {
+                'label' : 'Ville',
+                'label_attr' : {
+                    'class' : 'text-primary'
+                }
+            }) }}
+
+            {# -------champs adresse------- #}
+            {{ form_row(formEtablissement.adresse, {
+                'label' : 'Adresse',
+                'label_attr' : {
+                    'class' : 'text-primary'
+                },
+                'attr' : {
+                    'placeholder' : "Veuillez saisir l'adresse"
+                }
+            }) }}
+
+            {# -------champs email------- #}
+            {{ form_row(formEtablissement.email, {
+                'label' : 'Email',
+                'label_attr' : {
+                    'class' : 'text-primary'
+                },
+                'attr' : {
+                    'placeholder' : "Veuillez saisir l'email"
+                }
+            }) }}
+
+            {# -------champs image------- #}
+            {{ form_row(formEtablissement.image, {
+                'label' : 'Image',
+                'label_attr' : {
+                    'class' : 'text-primary'
+                },
+                'attr' : {
+                    'placeholder' : "Veuillez saisir le lien de l\'image"
+                },
+                'help' : "Le lien ne doit avoir au maximun 255 caractères."
+            }) }}
+
+            <input type="submit" class="btn btn-primary mt-2" value="Créer">
+            {{ form_end(formEtablissement) }}
+        </div>
+    </div>
+
+{% endblock %}

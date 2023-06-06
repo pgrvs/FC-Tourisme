@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Etablissements{% endblock %}
+{% block title %}Favori{% endblock %}
 
 {% block body %}
     <h1 class="text-center mb-4">{{  app.user.favoris|length < 2 ? 'Favori' : 'Favoris' }}</h1>

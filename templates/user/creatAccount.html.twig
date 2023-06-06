@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}Compte{% endblock %}
 
 {% block body %}
     <h1 class="text-center my-5">Créer votre compte</h1>
@@ -64,17 +64,6 @@
                     'placeholder' : 'Veuillez saisir votre mot de passe'
                 },
                 'help' : "Le mot de passe doit contenir au moins 8 caractères."
-            }) }}
-
-            {# -------champs roles------- #}
-            {{ form_row(formUser.roles, {
-                'label' : 'Vous êtes un :',
-                'label_attr' : {
-                    'class' : 'text-primary'
-                },
-                'attr' : {
-                    'placeholder' : 'Veuillez saisir votre '
-                }
             }) }}
 
             <input type="submit" class="btn btn-primary mt-2" value="Créer">

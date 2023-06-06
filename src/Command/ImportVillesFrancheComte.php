@@ -29,6 +29,10 @@ class ImportVillesFrancheComte extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        foreach ($this->villeRepository->findAll() as $ville){
+            $this->villeRepository->remove($ville, true);
+        }
+
         $reader = Reader::createFromPath('src/Command/villes.csv', 'r');
         $reader->setDelimiter(';');
         $reader->setHeaderOffset(0);
@@ -46,7 +50,6 @@ class ImportVillesFrancheComte extends Command
                 } else {
                     $ville->setNom($record['Commune']);
                 }
-                $ville->setNom($record['Commune']);
                 $ville->setNomDepartement($record['Nom département']);
                 $ville->setNumDepartement($record['Département']);
                 $ville->setNomRegion($record['Région']);

@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compte{% endblock %}
+
+{% block body %}
+    <h1 class="text-center mb-5">Votre Compte</h1>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Informations utilisateur</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <span class="fw-bold">Prénom :</span>
+                                <span>{{ utilisateur.prenom }}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <span class="fw-bold">Nom :</span>
+                                <span>{{ utilisateur.nom }}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <span class="fw-bold">Email :</span>
+                                <span>{{ utilisateur.email }}</span>
+                            </li>
+                            {% if utilisateur.pseudo is defined %}
+                                <li class="list-group-item">
+                                    <span class="fw-bold">Pseudo :</span>
+                                    <span>{{ utilisateur.pseudo }}</span>
+                                </li>
+                            {% endif %}
+                            <li class="list-group-item">
+                                <span class="fw-bold">Mot de passe :</span>
+                                <a href="{{ path('app_set_password') }}"><span class="badge bg-warning">Changer le mot de passe</span></a>
+                            </li>
+                            <li class="list-group-item mt-3 d-flex justify-content-between">
+                                <a href="{{ path('app_set_account') }}" class="btn btn-outline-warning">Modifier</a>
+                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Supprimer
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmation de suppression</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Êtes-vous sûr de vouloir supprimer votre compte ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                <a href="#" type="button" class="btn btn-danger">Supprimer</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -24,7 +24,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null; 
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: 'Le statut est obligatoire.')]
     private array $roles = [];
 
     /**
@@ -57,12 +56,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $actif = null;
 
-    #[ORM\ManyToMany(targetEntity: Etablissement::class, mappedBy: 'favoris')]
+    #[ORM\ManyToMany(targetEntity: Etablissement::class, mappedBy: 'favoris', cascade: ['remove'])]
     private Collection $favoris;
+
+    #[ORM\OneToMany(mappedBy: 'proprietaire', targetEntity: Etablissement::class, cascade: ['remove'])]
+    private Collection $posseder;
 
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
+        $this->posseder = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -229,6 +232,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->favoris->removeElement($favori)) {
             $favori->removeFavori($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Etablissement>
+     */
+    public function getPosseder(): Collection
+    {
+        return $this->posseder;
+    }
+
+    public function addPosseder(Etablissement $posseder): self
+    {
+        if (!$this->posseder->contains($posseder)) {
+            $this->posseder->add($posseder);
+            $posseder->setProprietaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removePosseder(Etablissement $posseder): self
+    {
+        if ($this->posseder->removeElement($posseder)) {
+            // set the owning side to null (unless already changed)
+            if ($posseder->getProprietaire() === $this) {
+                $posseder->setProprietaire(null);
+            }
         }
 
         return $this;

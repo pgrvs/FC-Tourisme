@@ -39,6 +39,15 @@ class EtablissementRepository extends ServiceEntityRepository
         }
     }
 
+    public function add(Etablissement $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
 //    /**
 //     * @return Etablissement[] Returns an array of Etablissement objects
 //     */
