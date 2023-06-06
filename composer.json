@@ -13,6 +13,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
+        "easycorp/easyadmin-bundle": "^4.6",
         "fakerphp/faker": "^1.20",
         "knplabs/knp-paginator-bundle": "^6.0",
         "league/csv": "^9.8",

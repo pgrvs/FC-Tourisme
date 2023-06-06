@@ -7,11 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\HasLifecycleCallbacks()]
+#[UniqueEntity(fields: ["email"], message: "Cet email est déjà utilisé.")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -56,10 +59,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $actif = null;
 
-    #[ORM\ManyToMany(targetEntity: Etablissement::class, mappedBy: 'favoris', cascade: ['remove'])]
+    #[ORM\ManyToMany(targetEntity: Etablissement::class, mappedBy: 'favoris', cascade:['remove'], orphanRemoval:true)]
     private Collection $favoris;
 
-    #[ORM\OneToMany(mappedBy: 'proprietaire', targetEntity: Etablissement::class, cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'proprietaire', targetEntity: Etablissement::class, cascade:['remove'], orphanRemoval:true)]
     private Collection $posseder;
 
     public function __construct()
@@ -265,5 +268,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->nom. ' ' . $this->prenom;
     }
 }

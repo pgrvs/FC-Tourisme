@@ -23,7 +23,7 @@
                                 <span class="fw-bold">Email :</span>
                                 <span>{{ utilisateur.email }}</span>
                             </li>
-                            {% if utilisateur.pseudo is defined %}
+                            {% if utilisateur.pseudo is not empty %}
                                 <li class="list-group-item">
                                     <span class="fw-bold">Pseudo :</span>
                                     <span>{{ utilisateur.pseudo }}</span>
@@ -48,11 +48,11 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Êtes-vous sûr de vouloir supprimer votre compte ?
+                                                Êtes-vous sûr de vouloir supprimer votre compte ainsi que les établissements associés ?
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                                <a href="#" type="button" class="btn btn-danger">Supprimer</a>
+                                                <a href="{{ path('app_delete_account') }}" type="button" class="btn btn-danger">Supprimer</a>
                                             </div>
                                         </div>
                                     </div>

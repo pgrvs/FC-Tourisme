@@ -65,11 +65,11 @@ class Etablissement
     #[ORM\JoinColumn(nullable: false)]
     private ?Ville $ville = null;
 
-    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'etablissements', cascade: ['remove'])]
+    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'etablissements', cascade:['remove'], orphanRemoval:true)]
     #[ORM\JoinColumn(nullable: false)]
     private Collection $categorie;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'favoris', cascade: ['remove'])]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'favoris', cascade:['remove'], orphanRemoval:true)]
     private Collection $favoris;
 
     #[ORM\ManyToOne(inversedBy: 'posseder')]
@@ -288,5 +288,10 @@ class Etablissement
         $this->proprietaire = $proprietaire;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->nom;
     }
 }

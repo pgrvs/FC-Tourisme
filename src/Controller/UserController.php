@@ -5,13 +5,18 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\SetUserPasswordType;
 use App\Form\SetUserType;
+use App\Form\UserType;
+use App\Repository\CategorieRepository;
+use App\Repository\EtablissementRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+
 
 class UserController extends AbstractController
 {
@@ -34,14 +39,10 @@ class UserController extends AbstractController
     #[Route('/utilisateur/nouveau', name: 'app_creat_account', methods: ['GET', 'POST'], priority: 1)]
     public function newAccount(Request $request): Response
     {
-        if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('app_accueil');
-        }
-
         $user = new User();
 
         // Création du formulair
-        $formUser = $this->createForm(SetUserType::class, $user);
+        $formUser = $this->createForm(UserType::class, $user);
 
         // Reconnaitre si le formulaire a été soumis ou pas
         $formUser->handleRequest($request);
@@ -109,8 +110,12 @@ class UserController extends AbstractController
     }
 
     #[Route('/utilisateur/modifier/mot-de-passe', name: 'app_set_password')]
-    public function setPassword(Request $request): Response
+    public function setPassword(Request $request, UserRepository $userRepository): Response
     {
+        if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
         $user = $this->getUser();
 
         // Création du formulair
@@ -123,21 +128,18 @@ class UserController extends AbstractController
         if ($formUser->isSubmitted() && $formUser->isValid()){
             $currentPassword = $formUser->get('password')->getData();
             $newPassword = $formUser->get('newPassword')->getData();
-
-            // Vérifier si le mot de passe actuel correspond
-            $passwordHash = $this->passwordHasher->hashPassword($user, $user->getPassword());
-            if (!$this->isPasswordValid($user, $currentPassword)) {
-                $this->addFlash('error', 'Mot de passe actuel incorrect.');
-                return $this->redirectToRoute('change_password');
+            if (!$this->passwordHasher->isPasswordValid($user, $currentPassword)) {
+                return $this->render('user/setPassword.html.twig', [
+                    'formUser'=> $formUser->createView(),
+                    'erreur' => 'Mot de passe actuel incorrect.'
+                ]);
             }
 
+            $newPasswordHash = $this->passwordHasher->hashPassword($user, $newPassword);
 
-
-
-
-            $passwordHash = $this->passwordHasher->hashPassword($user, $user->getPassword());
             $user   ->setUpdateAt(new \DateTime())
-                    ->setPassword($passwordHash);
+                    ->setPassword($newPasswordHash);
+
             // Insérer l'utilisateur dans la base de données
             $this->userRepository->add($user, true);
 
@@ -147,5 +149,41 @@ class UserController extends AbstractController
         return $this->render('user/setPassword.html.twig', [
             'formUser'=> $formUser->createView()
         ]);
+    }
+
+    #[Route('/utilisateur/supprimer', name: 'app_delete_account')]
+    public function deleteAccount(Request $request, EntityManagerInterface $entityManager,EtablissementRepository $etablissementRepository, UserRepository $userRepository, CategorieRepository $categorieRepository): Response
+    {
+        if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_accueil');
+        }
+
+        $user = $this->getUser();
+
+        foreach ($user->getPosseder() as $etablissement){
+            $this->getUser()->removePosseder($etablissement);
+            $entityManager->flush();
+
+            foreach ($userRepository->findAll() as $user){
+                $user->removeFavori($etablissement);
+                $entityManager->flush();
+            }
+
+            foreach ($categorieRepository->findAll() as $categorie){
+                $categorie->removeEtablissement($etablissement);
+                $entityManager->flush();
+            }
+
+            $etablissementRepository->remove($etablissement, true);
+        }
+
+        foreach ($user->getFavoris() as $favori ){
+            $user->removeFavori($favori);
+        }
+        $entityManager->flush();
+        $userRepository->remove($user, true);
+
+
+        return $this->redirectToRoute('app_accueil');
     }
 }
